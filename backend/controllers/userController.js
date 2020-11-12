@@ -9,8 +9,12 @@ import generateToken from '../utils/generateToken.js'
 const authUser = asyncHandler(async (req, res) => {
     const { email, password } = req.body
 
+    console.log('req: ', req)
+
     // find one document and we find by email
     const user = await User.findOne({ email })
+
+    console.log('user: ', user);
 
     if (user && (await user.matchPassword(password))) {
         res.json({
