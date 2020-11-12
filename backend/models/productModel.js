@@ -1,5 +1,5 @@
-const { strikethrough } = require('colors');
-const mongoose = require('mongoose');
+import mongoose from 'mongoose'
+import strikethrough from 'colors'
 
 const reviewSchema = mongoose.Schema({
     name: {
@@ -74,4 +74,4 @@ const Product = mongoose.model('Product', productSchema)
 
 
 
-module.exports = Product
+export default Product
