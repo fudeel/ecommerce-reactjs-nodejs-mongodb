@@ -4,11 +4,12 @@ import { Form, Button, Row, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
-import { login } from '../actions/userAction'
+import { register } from '../actions/userAction'
 import FormContainer from '../components/FormContainer'
 
-const LoginScreen = ({ location, history }) => {
+const RegisterScreen = ({ location, history }) => {
 
+    const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
@@ -18,7 +19,6 @@ const LoginScreen = ({ location, history }) => {
 
 
     const redirect = location.search ? location.search.split('=')[1] : '/'
-
 
     useEffect(() => {
         // check if already logged in
@@ -31,16 +31,22 @@ const LoginScreen = ({ location, history }) => {
     const submitHandler = (e) => {
         e.preventDefault()
 
-        dispatch(login(email, password))
+        dispatch(register(name, email, password))
     }
+
 
 
     return (
         <FormContainer>
-            <h1>Sign in</h1>
+            <h1>Register</h1>
             {error && <Message variant='danger'>{error}</Message>}
             {loading && <Loader></Loader>}
             <Form onSubmit={submitHandler}>
+                <Form.Group controlId='name'>
+                    <Form.Label>Name</Form.Label>
+                    <Form.Control type='name' placeholder='name' value={name} onChange={(e) => setName(e.target.value)}></Form.Control>
+                </Form.Group>
+
                 <Form.Group controlId='email'>
                     <Form.Label>Email address</Form.Label>
                     <Form.Control type='email' placeholder='email' value={email} onChange={(e) => setEmail(e.target.value)}></Form.Control>
@@ -52,18 +58,18 @@ const LoginScreen = ({ location, history }) => {
                 </Form.Group>
 
                 <Button type='submit' variant='primary'>
-                    Sign In
+                    Register
                 </Button>
             </Form>
 
 
             <Row className='py-3'>
                 <Col>
-                    New costumer? <Link to={`/register`}>Register</Link>
+                    Already registered? <Link to={'/login'}>Login</Link>
                 </Col>
             </Row>
         </FormContainer>
     )
 }
 
-export default LoginScreen
+export default RegisterScreen
